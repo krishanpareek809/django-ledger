@@ -3,6 +3,8 @@ from pathlib import Path
 
 from django_ledger.settings import DJANGO_LEDGER_GRAPHQL_SUPPORT_ENABLED
 
+import dj_database_url
+
 BASE_DIR = Path(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 
 SECRET_KEY = os.getenv('SECRET_KEY')
@@ -68,6 +70,8 @@ DATABASES = {
         'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
     }
 }
+
+DATABASES["default"] = dj_database_url.parse("postgres://django_ledger_db_user:2UCwBmMZRilHEVliKN3bTtn2HczTsgCJ@dpg-cojar063e1ms73fr8i7g-a.oregon-postgres.render.com/django_ledger_db")
 
 # Password validation
 # https://docs.djangoproject.com/en/2.2/ref/settings/#auth-password-validators
