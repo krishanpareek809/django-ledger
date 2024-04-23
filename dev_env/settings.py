@@ -7,12 +7,14 @@ import dj_database_url
 
 BASE_DIR = Path(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 
-SECRET_KEY = os.getenv('SECRET_KEY')
-if not SECRET_KEY:
-    SECRET_KEY = 'djangoledger1234!DoNotUse!BadIdea!VeryInsecure!'
-DEBUG = True
+SECRET_KEY = os.environ.get("SECRET_KEY")
+# SECRET_KEY = os.getenv('SECRET_KEY')
+# if not SECRET_KEY:
+#     SECRET_KEY = 'djangoledger1234!DoNotUse!BadIdea!VeryInsecure!'
+# DEBUG = os.environ.get("DEBUG", "False").lower( ) == "true"
 
-ALLOWED_HOSTS = ['127.0.0.1', '192.168.1.102', 'localhost']
+ALLOWED_HOSTS = os.environ.get("ALLOWED_HOSTS").split(" ") 
+# ALLOWED_HOSTS = ['127.0.0.1', '192.168.1.102', 'localhost']
 CSRF_TRUSTED_ORIGINS = ['https://*.preview.app.github.dev']
 
 INSTALLED_APPS = [
@@ -71,7 +73,11 @@ DATABASES = {
     }
 }
 
-DATABASES["default"] = dj_database_url.parse("postgres://django_ledger_db_user:2UCwBmMZRilHEVliKN3bTtn2HczTsgCJ@dpg-cojar063e1ms73fr8i7g-a.oregon-postgres.render.com/django_ledger_db")
+database_url = os.environ.get("DATABASE_URL")
+
+DATABASES["default"] = dj_database_url.parse(database_url)
+
+# DATABASES["default"] = dj_database_url.parse("postgres://django_ledger_db_user:2UCwBmMZRilHEVliKN3bTtn2HczTsgCJ@dpg-cojar063e1ms73fr8i7g-a.oregon-postgres.render.com/django_ledger_db")
 
 # Password validation
 # https://docs.djangoproject.com/en/2.2/ref/settings/#auth-password-validators
